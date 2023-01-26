@@ -2,11 +2,16 @@
   "name": "my-prisma-project",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon"
+    "dev": "nodemon src/app.ts",
+    "prisma:seed": "npx prisma db seed"
   },
   "keywords": [],
+  "prisma":{
+    "seed": "ts-node prisma/seed.ts"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
