@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model carmakers {
+  id     Int      @id @default(autoincrement())
+  name   String
+  models models[]
+}
+
+model colors {
+  id       Int        @id @default(autoincrement())
+  name     String
+  vehicles vehicles[]
+}
+
+model models {
+  id          Int        @id @default(autoincrement())
+  name        String
+  carmaker_id Int
+  year        Int
+  carmakers   carmakers  @relation(fields: [carmaker_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "models_fk0")
+  vehicles    vehicles[]
+}
+
+model vehicles {
+  id            Int         @id @default(autoincrement())
+  color_id      Int
+  model_id      Int
+  license_plate String      @db.VarChar(7)
+  price_per_day Int
+  status        status_type @default(available)
+  colors        colors      @relation(fields: [color_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "vehicles_fk0")
+  models        models      @relation(fields: [model_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "vehicles_fk1")
+}
+
+enum status_type {
+  available
+  unavailable
+}
