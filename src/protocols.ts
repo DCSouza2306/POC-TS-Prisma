@@ -12,6 +12,7 @@ export type vehicles = [{
     pricePerDay: number
 }]
 export type vehicle = {
+    id: number,
     model: string,
     carMaker: string,
     year: number,

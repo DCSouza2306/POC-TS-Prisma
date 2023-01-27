@@ -61,8 +61,14 @@ export async function updateVehicle(req: Request, res: Response) {
 
 export async function deleteVehicle(req: Request, res: Response) {
     try {
+        const {id} = req.params;
 
+        await vehiclesService.deleteVehicle(parseInt(id));
+        res.sendStatus(httpStatus.OK)
     } catch (error) {
+        if(error.name == "NotFoundError"){
+            return res.status(httpStatus.NOT_FOUND).send(error.message)
+        }
         res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
     }
 }

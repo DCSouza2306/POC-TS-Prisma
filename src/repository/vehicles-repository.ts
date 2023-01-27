@@ -16,117 +16,127 @@ async function getVehicles() {
     }
 };
 
-async function findLicensePlate(license_plate: string){
-    try{
-        return prisma.vehicles.findFirst({
-            where:{
-                license_plate
-            }
+async function deleteVehicle(id: number) {
+    try {
+        return prisma.vehicles.delete({
+            where: { id }
         })
-    } catch(error) {
-        throw error
-    }
-};
-
-async function findIdModel(model: string, year: number){
-    try{
-        return prisma.models.findFirst({
-            where:{
-                name: model,
-                year
-            },
-            select:{
-                id: true,
-            }
-        })
-    } catch(error) {
+    } catch (error) {
         throw error
     }
 }
 
-async function findIdCarMaker(carMaker: string){
-    try{
+async function findLicensePlate(license_plate: string) {
+    try {
+        return prisma.vehicles.findFirst({
+            where: {
+                license_plate
+            }
+        })
+    } catch (error) {
+        throw error
+    }
+};
+
+async function findIdModel(model: string, year: number) {
+    try {
+        return prisma.models.findFirst({
+            where: {
+                name: model,
+                year
+            },
+            select: {
+                id: true,
+            }
+        })
+    } catch (error) {
+        throw error
+    }
+}
+
+async function findIdCarMaker(carMaker: string) {
+    try {
         return prisma.carmakers.findFirst({
-            where:{
+            where: {
                 name: carMaker,
             },
-            select:{
+            select: {
                 id: true,
             }
         })
-    } catch(error) {
+    } catch (error) {
         throw error
     }
 };
 
-async function findIdColor(color: string){
-    try{
+async function findIdColor(color: string) {
+    try {
         return prisma.colors.findFirst({
-            where:{
+            where: {
                 name: color,
             },
-            select:{
+            select: {
                 id: true,
             }
         })
-    } catch(error) {
+    } catch (error) {
         throw error
     }
 };
 
-async function insertVehicle( 
-    vehicle: vehicle, 
-    idColor: number, 
+async function insertVehicle(
+    vehicle: vehicle,
+    idColor: number,
     idModel: number
-    ){
+) {
 
-    try{
+    try {
         return prisma.vehicles.create({
-            data:{
+            data: {
                 color_id: idColor,
                 model_id: idModel,
                 license_plate: vehicle.licensePlate,
                 price_per_day: vehicle.pricePerDay
             }
         })
-    } catch(error) {
+    } catch (error) {
         throw error
     }
 };
 
-async function getVehicleById(id: number){
-    try{
+async function getVehicleById(id: number) {
+    try {
         return prisma.vehicles.findFirst({
-           where:{ id },
-           include: {
-            models: {
-                include: { carmakers: { select: { name: true } } }
-            },
-            colors: { select: { name: true } }
-        }
+            where: { id },
+            include: {
+                models: {
+                    include: { carmakers: { select: { name: true } } }
+                },
+                colors: { select: { name: true } }
+            }
         })
-    } catch(error){
+    } catch (error) {
         throw error
     }
 };
 
 async function updateVehicle(
-    vehicle: vehicle, 
+    vehicle: vehicle,
     id: number,
     idColor: number,
     idModel: number
-){
-    try{
+) {
+    try {
         return prisma.vehicles.update({
-            where:{id},
-            data:{
+            where: { id },
+            data: {
                 color_id: idColor,
                 model_id: idModel,
                 license_plate: vehicle.licensePlate,
                 price_per_day: vehicle.pricePerDay
             }
         })
-    } catch(error){
+    } catch (error) {
         throw error
     }
 }
@@ -139,7 +149,8 @@ const vehiclesRepository = {
     findIdCarMaker,
     findIdColor,
     insertVehicle,
-    updateVehicle
+    updateVehicle,
+    deleteVehicle
 };
 
 export default vehiclesRepository;

@@ -9,6 +9,7 @@ async function getVehicles() {
         const vehicles: object[] = [];
         for (let i = 0; i < data.length; i++) {
             vehicles.push({
+                id: data[i].id,
                 model: data[i].models.name,
                 carMaker: data[i].models.carmakers.name,
                 year: data[i].models.year,
@@ -41,6 +42,7 @@ async function getVehicleById(id: number) {
     try {
         const data = await vehiclesRepository.getVehicleById(id);
         const vehicle: vehicle = {
+            id: data.id,
             model: data.models.name,
             carMaker: data.models.carmakers.name,
             year: data.models.year,
@@ -57,8 +59,11 @@ async function getVehicleById(id: number) {
 
 async function updateVehicle(vehicle: vehicle, id: number){
     try{
-        const changeLicense = await vehiclesRepository.getVehicleById(id)
-        if(changeLicense.license_plate != vehicle.licensePlate){
+        const updateVehicle = await vehiclesRepository.getVehicleById(id);
+        if(!updateVehicle){
+            throw notFoundError("Can not found vehicle");
+        }
+        if(updateVehicle.license_plate != vehicle.licensePlate){
             await findLicensePlate(vehicle.licensePlate);
         }
         const { id: idModel } = await findIdModel(vehicle.model, vehicle.year);
@@ -67,6 +72,19 @@ async function updateVehicle(vehicle: vehicle, id: number){
 
         await vehiclesRepository.updateVehicle(vehicle, id, idModel, idColor)
     } catch(error){
+        throw error
+    }
+};
+
+async function deleteVehicle(id: number){
+    try{
+        const updateVechicle = await vehiclesRepository.getVehicleById(id);
+        if(!updateVechicle){
+            throw notFoundError("Can not found vehicle");
+        };
+
+        await vehiclesRepository.deleteVehicle(id);
+    } catch(error) {
         throw error
     }
 }
@@ -80,7 +98,7 @@ async function findLicensePlate(licensePlate: string) {
     } catch (error) {
         throw error
     }
-}
+};
 
 async function findIdModel(model: string, year: number) {
     try {
@@ -121,7 +139,8 @@ const vehiclesService = {
     getVehicles,
     postVehicle,
     getVehicleById,
-    updateVehicle
+    updateVehicle,
+    deleteVehicle
 };
 
 export default vehiclesService
