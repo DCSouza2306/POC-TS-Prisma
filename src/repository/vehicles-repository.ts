@@ -4,11 +4,21 @@ import { model, vehicle } from "../protocols.js";
 async function getVehicles() {
     try {
         return prisma.vehicles.findMany({
-            include: {
+            select: {
+                id: true,
                 models: {
-                    include: { carmakers: { select: { name: true } } }
+                    select: {
+                        name: true,
+                        carmakers: {
+                            select: { name: true }
+                        }
+                    }
                 },
-                colors: { select: { name: true } }
+                colors: {
+                    select: { name: true }
+                },
+                price_per_day: true,
+                status: true,
             }
         })
     } catch (error) {
@@ -38,36 +48,7 @@ async function findLicensePlate(license_plate: string) {
     }
 };
 
-async function findIdModel(model: string, year: number) {
-    try {
-        return prisma.models.findFirst({
-            where: {
-                name: model,
-                year,
-            },
-            select:{
-                id: true,
-            }
-        })
-    } catch (error) {
-        throw error
-    }
-}
 
-async function findIdCarMaker(carMaker: string) {
-    try {
-        return prisma.carmakers.findFirst({
-            where: {
-                name: carMaker,
-            },
-            select: {
-                id: true,
-            }
-        })
-    } catch (error) {
-        throw error
-    }
-};
 
 async function findIdColor(color: string) {
     try {
@@ -108,11 +89,22 @@ async function getVehicleById(id: number) {
     try {
         return prisma.vehicles.findFirst({
             where: { id },
-            include: {
+            select: {
+                id: true,
                 models: {
-                    include: { carmakers: { select: { name: true } } }
+                    select: {
+                        name: true,
+                        carmakers: {
+                            select: { name: true }
+                        }
+                    }
                 },
-                colors: { select: { name: true } }
+                colors: {
+                    select: { name: true }
+                },
+                license_plate: true,
+                price_per_day: true,
+                status: true,
             }
         })
     } catch (error) {
@@ -141,31 +133,16 @@ async function updateVehicle(
     }
 };
 
-async function insertModel(model: model, idCarMaker: number){
-    try{
-        return prisma.models.create({
-            data:{
-                name: model.name,
-                carmaker_id: idCarMaker,
-                year: model.year,
-            }
-        })
-    } catch(error){
-        throw error
-    }
-}
+
 
 const vehiclesRepository = {
     getVehicles,
     getVehicleById,
     findLicensePlate,
-    findIdModel,
-    findIdCarMaker,
     findIdColor,
     insertVehicle,
     updateVehicle,
     deleteVehicle,
-    insertModel
 };
 
 export default vehiclesRepository;

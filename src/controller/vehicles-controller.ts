@@ -73,16 +73,6 @@ export async function deleteVehicle(req: Request, res: Response) {
     }
 };
 
-export async function postModel(req: Request, res: Response) {
-    try{
-        const model: model = req.body;
-        await vehiclesService.postModel(model);
-        res.sendStatus(httpStatus.CREATED)
-    } catch(error){
-        res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
-    }
-};
-
 export async function postCarMaker(req: Request, res: Response){
     try{
 

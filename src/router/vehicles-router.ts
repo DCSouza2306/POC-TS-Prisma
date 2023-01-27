@@ -5,8 +5,7 @@ import {
     getVehiclesById, 
     postVehicle, 
     updateVehicle,
-    postCarMaker,
-    postModel 
+    postCarMaker
 } from "../controller/vehicles-controller.js";
 import { schemaValidation } from "../middleware/vehicles-schema-validation.js";
 import { vehicleSchema } from "../models/vehicle-schema.js";
@@ -18,7 +17,6 @@ vehiclesRouter.post("/",schemaValidation(vehicleSchema), postVehicle);
 vehiclesRouter.get("/:id", getVehiclesById);
 vehiclesRouter.patch("/:id",schemaValidation(vehicleSchema), updateVehicle);
 vehiclesRouter.delete("/:id", deleteVehicle);
-vehiclesRouter.post("/models", postModel);
 vehiclesRouter.post("/company", postCarMaker);
 
 export default vehiclesRouter;
