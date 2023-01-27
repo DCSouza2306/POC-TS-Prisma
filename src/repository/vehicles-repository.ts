@@ -92,10 +92,27 @@ async function insertVehicle(
     } catch(error) {
         throw error
     }
+};
+
+async function getVehicleById(id: number){
+    try{
+        return prisma.vehicles.findFirst({
+           where:{ id },
+           include: {
+            models: {
+                include: { carmakers: { select: { name: true } } }
+            },
+            colors: { select: { name: true } }
+        }
+        })
+    } catch(error){
+        throw error
+    }
 }
 
 const vehiclesRepository = {
     getVehicles,
+    getVehicleById,
     findLicensePlate,
     findIdModel,
     findIdCarMaker,

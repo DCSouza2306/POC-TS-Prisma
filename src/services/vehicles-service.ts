@@ -35,6 +35,24 @@ async function postVehicle(vehicle: vehicle) {
     } catch (error) {
         throw error
     }
+};
+
+async function getVehicleById(id: number) {
+    try {
+        const data = await vehiclesRepository.getVehicleById(id);
+        const vehicle: vehicle = {
+            model: data.models.name,
+            carMaker: data.models.carmakers.name,
+            year: data.models.year,
+            color: data.colors.name,
+            licensePlate: data.license_plate,
+            status: data.status,
+            pricePerDay: data.price_per_day
+        }
+        return vehicle;
+    } catch (error) {
+        throw error
+    }
 }
 
 async function findLicensePlate(licensePlate: string) {
@@ -51,7 +69,7 @@ async function findLicensePlate(licensePlate: string) {
 async function findIdModel(model: string, year: number) {
     try {
         const idModel = await vehiclesRepository.findIdModel(model, year);
-        if(!idModel){
+        if (!idModel) {
             throw notFoundError("Can not found this model/year");
         }
         return idModel
@@ -63,7 +81,7 @@ async function findIdModel(model: string, year: number) {
 async function findIdCarMaker(carMaker: string) {
     try {
         const idCarMaker = await vehiclesRepository.findIdCarMaker(carMaker);
-        if(!idCarMaker){
+        if (!idCarMaker) {
             throw notFoundError("Can not find car maker");
         }
     } catch (error) {
@@ -74,7 +92,7 @@ async function findIdCarMaker(carMaker: string) {
 async function findIdColor(color: string) {
     try {
         const idColor = await vehiclesRepository.findIdColor(color);
-        if(!idColor){
+        if (!idColor) {
             throw notFoundError("Can not find color");
         }
         return idColor;
@@ -85,7 +103,8 @@ async function findIdColor(color: string) {
 
 const vehiclesService = {
     getVehicles,
-    postVehicle
+    postVehicle,
+    getVehicleById
 };
 
 export default vehiclesService
