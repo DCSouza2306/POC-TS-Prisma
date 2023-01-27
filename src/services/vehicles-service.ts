@@ -53,6 +53,22 @@ async function getVehicleById(id: number) {
     } catch (error) {
         throw error
     }
+};
+
+async function updateVehicle(vehicle: vehicle, id: number){
+    try{
+        const changeLicense = await vehiclesRepository.getVehicleById(id)
+        if(changeLicense.license_plate != vehicle.licensePlate){
+            await findLicensePlate(vehicle.licensePlate);
+        }
+        const { id: idModel } = await findIdModel(vehicle.model, vehicle.year);
+        await findIdCarMaker(vehicle.carMaker);
+        const { id: idColor } = await findIdColor(vehicle.color);
+
+        await vehiclesRepository.updateVehicle(vehicle, id, idModel, idColor)
+    } catch(error){
+        throw error
+    }
 }
 
 async function findLicensePlate(licensePlate: string) {
@@ -104,7 +120,8 @@ async function findIdColor(color: string) {
 const vehiclesService = {
     getVehicles,
     postVehicle,
-    getVehicleById
+    getVehicleById,
+    updateVehicle
 };
 
 export default vehiclesService

@@ -41,10 +41,20 @@ export async function getVehiclesById(req: Request, res: Response) {
     }
 };
 
-export async function updateVechicle(req: Request, res: Response) {
+export async function updateVehicle(req: Request, res: Response) {
     try {
-
+        const vehicle = req.body as vehicle;
+        const {id} = req.params
+        await vehiclesService.updateVehicle(vehicle, parseInt(id));
+        res.sendStatus(httpStatus.OK)
     } catch (error) {
+        if (error.name == "NotFoundError") {
+            return res.status(httpStatus.NOT_FOUND).send(error.message)
+        };
+
+        if (error.name = "ConflictError") {
+            return res.status(httpStatus.CONFLICT).send(error.message)
+        }
         res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
     }
 };

@@ -108,6 +108,27 @@ async function getVehicleById(id: number){
     } catch(error){
         throw error
     }
+};
+
+async function updateVehicle(
+    vehicle: vehicle, 
+    id: number,
+    idColor: number,
+    idModel: number
+){
+    try{
+        return prisma.vehicles.update({
+            where:{id},
+            data:{
+                color_id: idColor,
+                model_id: idModel,
+                license_plate: vehicle.licensePlate,
+                price_per_day: vehicle.pricePerDay
+            }
+        })
+    } catch(error){
+        throw error
+    }
 }
 
 const vehiclesRepository = {
@@ -117,7 +138,8 @@ const vehiclesRepository = {
     findIdModel,
     findIdCarMaker,
     findIdColor,
-    insertVehicle
+    insertVehicle,
+    updateVehicle
 };
 
 export default vehiclesRepository;
