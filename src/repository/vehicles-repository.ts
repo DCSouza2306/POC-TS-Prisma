@@ -1,5 +1,5 @@
 import prisma from "../database/database.js";
-import { vehicle } from "../protocols.js";
+import { model, vehicle } from "../protocols.js";
 
 async function getVehicles() {
     try {
@@ -43,9 +43,9 @@ async function findIdModel(model: string, year: number) {
         return prisma.models.findFirst({
             where: {
                 name: model,
-                year
+                year,
             },
-            select: {
+            select:{
                 id: true,
             }
         })
@@ -139,6 +139,20 @@ async function updateVehicle(
     } catch (error) {
         throw error
     }
+};
+
+async function insertModel(model: model, idCarMaker: number){
+    try{
+        return prisma.models.create({
+            data:{
+                name: model.name,
+                carmaker_id: idCarMaker,
+                year: model.year,
+            }
+        })
+    } catch(error){
+        throw error
+    }
 }
 
 const vehiclesRepository = {
@@ -150,7 +164,8 @@ const vehiclesRepository = {
     findIdColor,
     insertVehicle,
     updateVehicle,
-    deleteVehicle
+    deleteVehicle,
+    insertModel
 };
 
 export default vehiclesRepository;

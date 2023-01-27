@@ -1,5 +1,5 @@
 import vehiclesRepository from "../repository/vehicles-repository.js";
-import { vehicle } from "../protocols.js";
+import { model, vehicle } from "../protocols.js";
 import { conflictError } from "../errors/conflict-error.js";
 import { notFoundError } from "../errors/not-found-error.js";
 
@@ -118,6 +118,8 @@ async function findIdCarMaker(carMaker: string) {
         if (!idCarMaker) {
             throw notFoundError("Can not find car maker");
         }
+
+        return idCarMaker;
     } catch (error) {
         throw error
     }
@@ -133,6 +135,24 @@ async function findIdColor(color: string) {
     } catch (error) {
         throw error
     }
+};
+
+async function postModel(model: model){
+    try{
+        const modelExist = await findIdModel(model.name, model.year);
+        if(modelExist){
+            throw conflictError("Model/year already registred")
+        };
+
+        const {id: idCarMaker} = await findIdCarMaker(model.carMaker);
+        if(!idCarMaker){
+            throw notFoundError("Can not found car maker")
+        };
+
+        await vehiclesRepository.insertModel(model, idCarMaker);
+    } catch(error){
+        throw error
+    }
 }
 
 const vehiclesService = {
@@ -140,7 +160,8 @@ const vehiclesService = {
     postVehicle,
     getVehicleById,
     updateVehicle,
-    deleteVehicle
+    deleteVehicle,
+    postModel
 };
 
 export default vehiclesService

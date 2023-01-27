@@ -21,3 +21,14 @@ export type vehicle = {
     status: string,
     pricePerDay: number
 }
+
+export type model = {
+    name: string,
+    carMaker: string,
+    year: number,
+    color: string
+}
+
+export type carMaker = {
+    name: string,
+}
