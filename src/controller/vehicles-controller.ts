@@ -15,9 +15,17 @@ export async function getVehicles(req: Request, res: Response) {
 
 export async function postVehicle(req: Request, res: Response) {
     try {
-        const vehicle: vehicle = req.body;
-        await vehiclesService.postVehicle(vehicle)
+        const vehicle = req.body as vehicle;
+        await vehiclesService.postVehicle(vehicle);
+        res.sendStatus(httpStatus.CREATED)
     } catch (error) {
+        if(error.name == "NotFoundError"){
+            return res.status(httpStatus.NOT_FOUND).send(error.message)
+        };
+
+        if(error.name = "ConflictError"){
+            return res.status(httpStatus.CONFLICT).send(error.message)
+        }
         res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
     }
 };

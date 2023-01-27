@@ -28,7 +28,7 @@ async function postVehicle(vehicle: vehicle) {
     try {
         await findLicensePlate(vehicle.licensePlate);
         const { id: idModel } = await findIdModel(vehicle.model, vehicle.year);
-        const { id: idCarMaker } = await findIdCarMaker(vehicle.carMaker);
+        await findIdCarMaker(vehicle.carMaker);
         const { id: idColor } = await findIdColor(vehicle.color);
 
         await vehiclesRepository.insertVehicle(vehicle, idModel, idColor)
@@ -52,7 +52,7 @@ async function findIdModel(model: string, year: number) {
     try {
         const idModel = await vehiclesRepository.findIdModel(model, year);
         if(!idModel){
-            throw notFoundError("Can not found this model");
+            throw notFoundError("Can not found this model/year");
         }
         return idModel
     } catch (error) {
@@ -66,7 +66,6 @@ async function findIdCarMaker(carMaker: string) {
         if(!idCarMaker){
             throw notFoundError("Can not find car maker");
         }
-        return idCarMaker
     } catch (error) {
         throw error
     }

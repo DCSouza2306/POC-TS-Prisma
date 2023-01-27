@@ -6,6 +6,7 @@ dotven.config();
 
 
 const app = express();
+app.use(json());
 app.use("/vehicles", vehiclesRouter);
 
 app.use(json());
