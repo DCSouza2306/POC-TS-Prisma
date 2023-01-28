@@ -73,10 +73,4 @@ export async function deleteVehicle(req: Request, res: Response) {
     }
 };
 
-export async function postCarMaker(req: Request, res: Response){
-    try{
 
-    } catch(error){
-        res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
-    }
-}

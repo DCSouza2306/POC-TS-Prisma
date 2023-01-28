@@ -16,7 +16,7 @@ async function getVehicles() {
 async function postVehicle(vehicle: vehicle) {
     try {
         await findLicensePlate(vehicle.licensePlate);
-        const { id: idModel } = await modelsService.findIdModel(vehicle.model, vehicle.year);
+        const { id: idModel } = await modelsService.findIdModel(vehicle.model, vehicle.year, "vehicle");
         await modelsService.findIdCarMaker(vehicle.carMaker);
         const { id: idColor } = await findIdColor(vehicle.color);
 
@@ -44,7 +44,7 @@ async function updateVehicle(vehicle: vehicle, id: number){
         if(updateVehicle.license_plate != vehicle.licensePlate){
             await findLicensePlate(vehicle.licensePlate);
         }
-        const { id: idModel } = await modelsService.findIdModel(vehicle.model, vehicle.year);
+        const { id: idModel } = await modelsService.findIdModel(vehicle.model, vehicle.year, "vehicle");
         await modelsService.findIdCarMaker(vehicle.carMaker);
         const { id: idColor } = await findIdColor(vehicle.color);
 
@@ -77,8 +77,6 @@ async function findLicensePlate(licensePlate: string) {
         throw error
     }
 };
-
-
 
 async function findIdColor(color: string) {
     try {

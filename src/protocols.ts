@@ -25,8 +25,7 @@ export type vehicle = {
 export type model = {
     name: string,
     carMaker: string,
-    year: number,
-    color: string
+    year: number
 }
 
 export type carMaker = {

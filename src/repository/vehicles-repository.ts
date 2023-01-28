@@ -1,5 +1,5 @@
 import prisma from "../database/database.js";
-import { model, vehicle } from "../protocols.js";
+import { vehicle } from "../protocols.js";
 
 async function getVehicles() {
     try {
@@ -48,8 +48,6 @@ async function findLicensePlate(license_plate: string) {
     }
 };
 
-
-
 async function findIdColor(color: string) {
     try {
         return prisma.colors.findFirst({
@@ -67,8 +65,8 @@ async function findIdColor(color: string) {
 
 async function insertVehicle(
     vehicle: vehicle,
-    idColor: number,
-    idModel: number
+    idModel: number,
+    idColor: number
 ) {
 
     try {
@@ -132,8 +130,6 @@ async function updateVehicle(
         throw error
     }
 };
-
-
 
 const vehiclesRepository = {
     getVehicles,

@@ -55,7 +55,7 @@ async function findIdCarMaker(carMaker: string) {
     try {
         return prisma.carmakers.findFirst({
             where: {
-                name: carMaker,
+                name: carMaker
             },
             select: {
                 id: true,
@@ -66,12 +66,25 @@ async function findIdCarMaker(carMaker: string) {
     }
 };
 
+async function insertCarMaker(carMaker: string){
+    try{
+        return prisma.carmakers.create({
+            data:{
+                name: carMaker
+            }
+        })
+    } catch(error){
+        throw error
+    }
+}
+
 const modelsRepository = {
     insertModel,
     getModelById,
     deleteModel,
     findIdModel,
-    findIdCarMaker
+    findIdCarMaker,
+    insertCarMaker
 };
 
 export default modelsRepository
