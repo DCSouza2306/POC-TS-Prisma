@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/app.ts",
-    "prisma:seed": "npx prisma db seed"
+    "prisma:seed": "npx prisma db seed",
+    "migration:run": "prisma migrate deploy",
+    "dev:migration:run": "npm run dev:load-envs prisma migrate deploy"
   },
   "keywords": [],
   "prisma":{
