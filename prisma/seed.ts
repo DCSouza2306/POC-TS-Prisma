@@ -12,6 +12,12 @@ async function main() {
    {
     name: "Cinza",
    },
+   {
+    name: "Vermelho"
+   },
+   {
+    name: "Azul"
+   }
   ],
  });
  await prisma.carmakers.createMany({
@@ -22,6 +28,12 @@ async function main() {
    {
     name: "Chevrolet",
    },
+   {
+    name: "Volkswagen"
+   },
+   {
+    name: "Toyota"
+   }
   ],
  });
  await prisma.models.createMany({
