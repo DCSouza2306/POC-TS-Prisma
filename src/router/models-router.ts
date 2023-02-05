@@ -3,10 +3,10 @@ import {
  postModel,
  deleteModel,
  postCarMaker,
-} from "../controller/models-controller.js";
-import { schemaValidation } from "../middleware/vehicles-schema-validation.js";
-import { modelsSchema } from "../models/models-schema.js";
-import { carMakerSchema } from "../models/car-makers-schema.js";
+} from "../controller/models-controller";
+import { schemaValidation } from "../middleware/vehicles-schema-validation";
+import { modelsSchema } from "../models/models-schema";
+import { carMakerSchema } from "../models/car-makers-schema";
 
 const modelsRouter = Router();
 modelsRouter.post("/", schemaValidation(modelsSchema), postModel);

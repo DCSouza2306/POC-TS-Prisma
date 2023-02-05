@@ -5,9 +5,9 @@ import {
  getVehiclesById,
  postVehicle,
  updateVehicle,
-} from "../controller/vehicles-controller.js";
-import { schemaValidation } from "../middleware/vehicles-schema-validation.js";
-import { vehicleSchema } from "../models/vehicle-schema.js";
+} from "../controller/vehicles-controller";
+import { schemaValidation } from "../middleware/vehicles-schema-validation";
+import { vehicleSchema } from "../models/vehicle-schema";
 
 const vehiclesRouter = Router();
 

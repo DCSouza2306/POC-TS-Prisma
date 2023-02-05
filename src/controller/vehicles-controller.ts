@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
 import httpStatus from "http-status";
-import vehiclesService from "../services/vehicles-service.js";
-import { vehicle } from "../protocols.js";
+import vehiclesService from "../services/vehicles-service";
+import { vehicle } from "../protocols";
 
 export async function getVehicles(req: Request, res: Response) {
  try {

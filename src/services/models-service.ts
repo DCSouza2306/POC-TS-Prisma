@@ -1,7 +1,7 @@
-import modelsRepository from "../repository/models-repository.js";
+import modelsRepository from "../repository/models-repository";
 import { model } from "../protocols.js";
-import { conflictError } from "../errors/conflict-error.js";
-import { notFoundError } from "../errors/not-found-error.js";
+import { conflictError } from "../errors/conflict-error";
+import { notFoundError } from "../errors/not-found-error";
 
 async function postModel(model: model) {
  const modelExist = await findIdModel(model.name, model.year, "model");

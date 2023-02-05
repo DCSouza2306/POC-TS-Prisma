@@ -1,4 +1,4 @@
-import { ErrorModel } from "../protocols.js";
+import { ErrorModel } from "../protocols";
 
 export function notFoundError(message: string): ErrorModel {
  return {

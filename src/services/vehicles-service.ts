@@ -1,8 +1,8 @@
-import vehiclesRepository from "../repository/vehicles-repository.js";
-import { model, vehicle } from "../protocols.js";
-import { conflictError } from "../errors/conflict-error.js";
-import { notFoundError } from "../errors/not-found-error.js";
-import modelsService from "./models-service.js";
+import vehiclesRepository from "../repository/vehicles-repository";
+import { model, vehicle } from "../protocols";
+import { conflictError } from "../errors/conflict-error";
+import { notFoundError } from "../errors/not-found-error";
+import modelsService from "./models-service";
 
 async function getVehicles() {
  const data = await vehiclesRepository.getVehicles();

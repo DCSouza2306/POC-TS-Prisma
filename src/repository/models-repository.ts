@@ -1,5 +1,5 @@
-import prisma from "../database/database.js";
-import { model } from "../protocols.js";
+import prisma from "../database/database";
+import { model } from "../protocols";
 
 async function insertModel(model: model, idCarMaker: number) {
  try {

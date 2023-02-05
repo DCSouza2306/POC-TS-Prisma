@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
 import httpStatus from "http-status";
-import modelsService from "../services/models-service.js";
-import { model } from "../protocols.js";
+import modelsService from "../services/models-service";
+import { model } from "../protocols";
 
 export async function postModel(req: Request, res: Response) {
  try {

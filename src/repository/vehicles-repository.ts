@@ -1,5 +1,5 @@
-import prisma from "../database/database.js";
-import { vehicle } from "../protocols.js";
+import prisma from "../database/database";
+import { vehicle } from "../protocols";
 
 async function getVehicles() {
  return prisma.vehicles.findMany({
